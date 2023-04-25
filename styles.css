@@ -1,0 +1,60 @@
+
+        p {font: size 18px;}
+        * {font-family: "Rubik", sans-serif;}
+        #today-header {
+        position: absolute;
+        display: flex;
+        align-items: flex-end;
+        top: 0px;
+        left: 10px;
+        }
+
+        #today-date-weekday {
+        font-size: 45pt;
+        font-weight: lighter;
+        }
+
+        #today-date-daymonth {
+        margin-left: 15px;
+        margin-bottom: 10px;
+        font-size: 16pt;
+        }
+
+        #today-date-day {
+        font-weight: bold;
+        }
+        #today-icon {
+        width: 160px;
+        height: 160px;
+        }
+        #wetter {
+        position: absolute;
+        top: 100px;
+        left: 10px;
+        }
+        #weather-description{
+        font-size: 25pt;
+        }
+        #weather-temp{
+        font-size: 20pt;
+        font-weight: bold;
+        color:orange;
+        }
+        #weather-tempminmax{
+        font-size: 20pt;
+        }
+        #quote {
+        position: absolute;
+        top: 0px;
+        left: 410px;
+        width: 380px;
+        }
+        .vl {
+        border-left: 1px solid black;
+        height: 480px;
+        position: absolute;
+        left: 48%;
+        margin-left: -1px;
+        top: 0;
+        }
+
