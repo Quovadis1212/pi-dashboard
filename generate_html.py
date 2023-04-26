@@ -13,7 +13,8 @@ def get_weather(Location):
     #Required variables
     api_key = 'a9a70ee61cdf08ce9c1753776b1a2bad'
     base_url = "https://api.openweathermap.org/data/2.5/weather?"
-    api_call = base_url + "q=" + Location + "&appid=" + api_key + "&units=metric"
+    api_call = base_url + "lang=de" + "&q=" + Location + "&appid=" + api_key + "&units=metric"
+    print(api_call)
     return requests.get(api_call).text
 
 def suffix(day):
