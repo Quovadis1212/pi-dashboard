@@ -24,16 +24,33 @@
         font-weight: bold;
         }
         #today-icon {
-        width: 160px;
-        height: 160px;
+        width: 130px;
+        height: 130px;
+        float: left;
+        margin-right: 10px;
         }
-        #wetter {
+        #weather_title {
+        font-size: 25pt;
+        font-weight: bold;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        }
+        #weather_now {
         position: absolute;
         top: 100px;
         left: 10px;
         }
+        #weather_forecast {
+        position: absolute;
+        top: 280px;
+        left: 10px;
+        }
+        #weather_text {
+                float: right;
+        }
         #weather-description{
-        font-size: 25pt;
+        font-size: 20pt;
+        font-weight: bold;
         }
         #weather-temp{
         font-size: 20pt;
