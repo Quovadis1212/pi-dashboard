@@ -5,43 +5,41 @@ import time
 import json
 import random
 import datetime
-import requests
 
+import requests
+import locale
 
 #Required Functions
 def get_weather(Location):
     #Required variables
     api_key = 'a9a70ee61cdf08ce9c1753776b1a2bad'
-    base_url = "https://api.openweathermap.org/data/2.5/weather?"
+    base_url = "https://api.openweathermap.org/data/2.5/forecast?"
     api_call = base_url + "lang=de" + "&q=" + Location + "&appid=" + api_key + "&units=metric"
-    print(api_call)
     return requests.get(api_call).text
 
-def suffix(day):
-  suffix = ""
-  if 4 <= day <= 20 or 24 <= day <= 30:
-    suffix = "th"
-  else:
-    suffix = ["st", "nd", "rd"][day % 10 - 1]
-  return suffix
+#set locale to german
+locale.setlocale(locale.LC_TIME, 'de_CH.ISO-8859-1')
 
 #Required variables
 Location="Sursee"
 
 datetime = datetime.date.today()
-daytoday = str(datetime.day) + suffix(datetime.day)
+daytoday = str(datetime.day)
 monthtoday = str(datetime.strftime("%b"))
 weekday = str(datetime.strftime('%A'))
 
+#set headers for api call
 headers = {"accept": "application/json"}
 
-#Daily seed
+#set Daily seed
 seed= datetime.day + datetime.month
 random.seed(seed)
 
-#Weather Get name, temperature, description, icon   
+#Api call
 json_data =  json.loads(get_weather(Location))
 print(json_data)
+json_data_now = json_data["list"][0]
+json_data_forecast = json_data["list"][1]
 
 #replace text in html file and save it as dashboard.html
 with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
@@ -52,13 +50,21 @@ with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
     filedata = filedata.replace('DAYTODAY', daytoday)
     filedata = filedata.replace('MONTHTODAY', monthtoday)
     
-    filedata = filedata.replace('CITY', json_data["name"])
-    filedata = re.sub('NOWTEMP', str(json_data["main"]["temp"]), filedata)
-    filedata = re.sub('MINTEMP', str(json_data["main"]["temp_min"]), filedata)
-    filedata = re.sub('MAXTEMP', str(json_data["main"]["temp_max"]), filedata)
-    filedata = filedata.replace('DESC', json_data["weather"][0]["description"])
-    filedata = re.sub('ICON', json_data["weather"][0]["icon"], filedata)
+    filedata = filedata.replace('NOW_CITY', Location)
+    filedata = re.sub('NOW_NOWTEMP', str(json_data_now["main"]["temp"]), filedata)
+    filedata = re.sub('NOW_MINTEMP', str(json_data_now["main"]["temp_min"]), filedata)
+    filedata = re.sub('NOW_MAXTEMP', str(json_data_now["main"]["temp_max"]), filedata)
+    filedata = filedata.replace('NOW_DESC', json_data_now["weather"][0]["description"])
+    filedata = re.sub('NOW_ICON', json_data_now["weather"][0]["icon"], filedata)
 
+    filedata = re.sub('FORECAST_CITY', Location, filedata)
+    filedata = re.sub('FORECAST_NOWTEMP', str(json_data_forecast["main"]["temp"]), filedata)
+    filedata = re.sub('FORECAST_MINTEMP', str(json_data_forecast["main"]["temp_min"]), filedata)
+    filedata = re.sub('FORECAST_MAXTEMP', str(json_data_forecast["main"]["temp_max"]), filedata)
+    filedata = filedata.replace('FORECAST_DESC', json_data_forecast["weather"][0]["description"])
+    filedata = re.sub('FORECAST_ICON', json_data_forecast["weather"][0]["icon"], filedata)
+    
     filedata = filedata.replace('QUOTE', random.choice(list(open('/home/pi/pi-dashboard/quotes.txt'))))
+
 with open('/home/pi/pi-dashboard/dashboard.html', 'w') as file:
     file.write(filedata)
