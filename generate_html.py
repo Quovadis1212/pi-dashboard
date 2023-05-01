@@ -8,16 +8,15 @@ import datetime
 import requests
 import locale
 
+import config
+
 #Required variables
-Location="Sursee"
 datetime = datetime.date.today()
 
 #Required Functions
-def get_weather(Location):
-    #Required variables
-    api_key = 'a9a70ee61cdf08ce9c1753776b1a2bad'
+def get_weather(City):
     base_url = "https://api.openweathermap.org/data/2.5/forecast?"
-    api_call = base_url + "lang=de" + "&q=" + Location + "&appid=" + api_key + "&units=metric"
+    api_call = base_url + "lang=de" + "&q=" + City + "&appid=" + config.api_key + "&units=metric"
     return requests.get(api_call).text
 
 #set locale to german
@@ -31,7 +30,7 @@ seed= datetime.day + datetime.month
 random.seed(seed)
 
 #Api call
-json_data =  json.loads(get_weather(Location))
+json_data =  json.loads(get_weather(config.Location))
 print(json_data)
 json_data_now = json_data["list"][0]
 json_data_forecast = json_data["list"][2]
@@ -44,14 +43,14 @@ with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
     filedata = filedata.replace('DAYTODAY', str(datetime.day))
     filedata = filedata.replace('MONTHTODAY', str(datetime.strftime("%b")))
     
-    filedata = filedata.replace('NOW_CITY', Location)
+    filedata = filedata.replace('NOW_CITY', config.Location)
     filedata = re.sub('NOW_NOWTEMP', str(json_data_now["main"]["temp"]), filedata)
     filedata = re.sub('NOW_MINTEMP', str(json_data_now["main"]["temp_min"]), filedata)
     filedata = re.sub('NOW_MAXTEMP', str(json_data_now["main"]["temp_max"]), filedata)
     filedata = filedata.replace('NOW_DESC', json_data_now["weather"][0]["description"])
     filedata = re.sub('NOW_ICON', json_data_now["weather"][0]["icon"], filedata)
 
-    filedata = re.sub('FORECAST_CITY', Location, filedata)
+    filedata = re.sub('FORECAST_CITY', config.Location, filedata)
     filedata = re.sub('FORECAST_NOWTEMP', str(json_data_forecast["main"]["temp"]), filedata)
     filedata = re.sub('FORECAST_MINTEMP', str(json_data_forecast["main"]["temp_min"]), filedata)
     filedata = re.sub('FORECAST_MAXTEMP', str(json_data_forecast["main"]["temp_max"]), filedata)
