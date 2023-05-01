@@ -5,9 +5,12 @@ import time
 import json
 import random
 import datetime
-
 import requests
 import locale
+
+#Required variables
+Location="Sursee"
+datetime = datetime.date.today()
 
 #Required Functions
 def get_weather(Location):
@@ -20,14 +23,6 @@ def get_weather(Location):
 #set locale to german
 locale.setlocale(locale.LC_TIME, 'de_CH.ISO-8859-1')
 
-#Required variables
-Location="Sursee"
-
-datetime = datetime.date.today()
-daytoday = str(datetime.day)
-monthtoday = str(datetime.strftime("%b"))
-weekday = str(datetime.strftime('%A'))
-
 #set headers for api call
 headers = {"accept": "application/json"}
 
@@ -39,16 +34,15 @@ random.seed(seed)
 json_data =  json.loads(get_weather(Location))
 print(json_data)
 json_data_now = json_data["list"][0]
-json_data_forecast = json_data["list"][1]
+json_data_forecast = json_data["list"][2]
 
 #replace text in html file and save it as dashboard.html
 with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
     filedata = file.read()
 
-
-    filedata = filedata.replace('WEEKDAY', weekday)
-    filedata = filedata.replace('DAYTODAY', daytoday)
-    filedata = filedata.replace('MONTHTODAY', monthtoday)
+    filedata = filedata.replace('WEEKDAY', str(datetime.strftime('%A')))
+    filedata = filedata.replace('DAYTODAY', str(datetime.day))
+    filedata = filedata.replace('MONTHTODAY', str(datetime.strftime("%b")))
     
     filedata = filedata.replace('NOW_CITY', Location)
     filedata = re.sub('NOW_NOWTEMP', str(json_data_now["main"]["temp"]), filedata)
