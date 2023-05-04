@@ -1,5 +1,6 @@
 #config for secrets
 config.py
+token_cache.bin
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

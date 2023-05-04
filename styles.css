@@ -74,4 +74,9 @@
         margin-left: -1px;
         top: 0;
         }
-
+        #calendar {
+                position: absolute;
+                top: 150px;
+                left: 410px;
+                width: 380px;
+        }

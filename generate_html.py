@@ -7,8 +7,11 @@ import random
 import datetime
 import requests
 import locale
-
+#import config.py with api keys
 import config
+
+#test calendar
+CALENDAR_EVENTS = "test2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; um  07:30:00 - 08:00:00\ntesttest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; um  08:00:00 - 08:30:00"
 
 #Required variables
 datetime = datetime.date.today()
@@ -32,6 +35,11 @@ random.seed(seed)
 #Api call
 json_data =  json.loads(get_weather(config.Location))
 print(json_data)
+#if json_data["weather"][0]["description"] and/or json_data["weather"][2]["description"] is greater than lenght 15, replace space with <br/>
+if len(json_data["list"][0]["weather"][0]["description"]) > 15:
+    json_data["list"][0]["weather"][0]["description"] = json_data["list"][0]["weather"][0]["description"].replace(" ", "<br/>")
+if len(json_data["list"][2]["weather"][0]["description"]) > 15:
+    json_data["list"][2]["weather"][0]["description"] = json_data["list"][2]["weather"][0]["description"].replace(" ", "<br/>")
 json_data_now = json_data["list"][0]
 json_data_forecast = json_data["list"][2]
 
@@ -58,6 +66,8 @@ with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
     filedata = re.sub('FORECAST_ICON', json_data_forecast["weather"][0]["icon"], filedata)
     
     filedata = filedata.replace('QUOTE', random.choice(list(open('/home/pi/pi-dashboard/quotes.txt'))))
+    filedata = re.sub('CALENDAR_EVENTS', CALENDAR_EVENTS.replace('\n', "<br/>"), filedata)
 
 with open('/home/pi/pi-dashboard/dashboard.html', 'w') as file:
     file.write(filedata)
+    
