@@ -7,11 +7,17 @@ import random
 import datetime
 import requests
 import locale
+
+import subprocess
+
 #import config.py with api keys
 import config
 
+
 #test calendar
-CALENDAR_EVENTS = "test2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; um  07:30:00 - 08:00:00\ntesttest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; um  08:00:00 - 08:30:00"
+script_path = '/home/pi/pi-dashboard/get_calendar.py'
+output = subprocess.check_output(['python', script_path], universal_newlines=True)
+CALENDAR_EVENTS = output
 
 #Required variables
 datetime = datetime.date.today()
