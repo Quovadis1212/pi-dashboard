@@ -8,16 +8,27 @@ import datetime
 import requests
 import locale
 
-import subprocess
-
 #import config.py with api keys
 import config
 
-
 #test calendar
+import subprocess
 script_path = '/home/pi/pi-dashboard/get_calendar.py'
 output = subprocess.check_output(['python', script_path], universal_newlines=True)
 CALENDAR_EVENTS = output
+print(CALENDAR_EVENTS)
+
+#test tasks
+script_path = '/home/pi/pi-dashboard/get_tasks.py'
+output = subprocess.check_output(['python', script_path], universal_newlines=True)
+TASKS = output
+print(TASKS)
+
+#test news
+script_path = '/home/pi/pi-dashboard/get_news.py'
+output = subprocess.check_output(['python', script_path], universal_newlines=True)
+NEWS = output
+print(NEWS)
 
 #Required variables
 datetime = datetime.date.today()
@@ -33,10 +44,6 @@ locale.setlocale(locale.LC_TIME, 'de_CH.ISO-8859-1')
 
 #set headers for api call
 headers = {"accept": "application/json"}
-
-#set Daily seed
-seed= datetime.day + datetime.month
-random.seed(seed)
 
 #Api call
 json_data =  json.loads(get_weather(config.Location))
@@ -71,8 +78,9 @@ with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
     filedata = filedata.replace('FORECAST_DESC', json_data_forecast["weather"][0]["description"])
     filedata = re.sub('FORECAST_ICON', json_data_forecast["weather"][0]["icon"], filedata)
     
-    filedata = filedata.replace('QUOTE', random.choice(list(open('/home/pi/pi-dashboard/quotes.txt'))))
+    filedata = re.sub('NEWS', NEWS.replace('\n', "<br/>"), filedata)
     filedata = re.sub('CALENDAR_EVENTS', CALENDAR_EVENTS.replace('\n', "<br/>"), filedata)
+    filedata = re.sub('TASKS', TASKS.replace('\n', "<br/>"), filedata)
 
 with open('/home/pi/pi-dashboard/dashboard.html', 'w') as file:
     file.write(filedata)

@@ -1,16 +1,9 @@
 import datetime
 import time
-from O365 import Account, MSGraphProtocol, FileSystemTokenBackend
+from O365 import Account, FileSystemTokenBackend
 from msal import ConfidentialClientApplication
 import re
 import config
-
-
-
-calendar_events = ""
-#set scopes to read shared calendars and refresh token
-#scopes = ['Calendars.Read.Shared', 'offline_access']
-scopes = 'Calendars.Read.Shared offline_access'
 
 # Function to Check if token is expired
 def is_token_expired(access_token):
@@ -70,63 +63,43 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename):
         return access_token, expires_at
     else:
         # Failed to refresh access token
-        #print('Failed to refresh access token.')
         return None
 
-# Read Microsoft 365 access token from file 
+# Read Microsoft 365 access token from file
 with open('o365_token.txt', 'r') as f:
     access_token = f.read().strip()
 
 if access_token == "":
     print("No token found. Please run get_token.py first.")
     exit()
-#if token is expired refresh it
+
+# If token is expired, refresh it
 if is_token_expired(access_token):
     refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, config.token_path, config.token_filename)
     if refreshed_token:
         access_token, expires_at = refreshed_token
-        #print('Refreshed Access Token:', access_token)
-        #print('Expires At:', expires_at)
 
 # Create Microsoft Graph API account object
 credentials = (config.CLIENT_ID, config.SECRET_ID)
-protocol = MSGraphProtocol(api_version='beta')
-account = Account(credentials, protocol=protocol)
+account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=config.token_path, token_filename=config.token_filename))
 
-# Set the start and end times to include events for today
-today = datetime.datetime.utcnow().date()
-start = datetime.datetime.combine(today, datetime.time.min).isoformat() + 'Z'
-end = datetime.datetime.combine(today, datetime.time.max).isoformat() + 'Z'
+if not account.is_authenticated:
+    account.authenticate(scopes=['basic', 'tasks_all'])
 
-# Authenticate with Microsoft Graph API and get default calendar events for today
 if account.is_authenticated:
-    schedule = account.schedule()
-    calendar = schedule.get_default_calendar()
-    q = calendar.new_query('start').greater_equal(start)
-    q.chain('and').on_attribute('end').less_equal(end)
-    events = calendar.get_events(query=q, include_recurring=True) 
-    for event in events:
-        event = str(event)
-        # Extract subject
-        subject_match = re.search(r'Subject: (.+?) \(on:', event)
-        subject = subject_match.group(1) if subject_match else None
+    planner = account.planner()
+    tasks = planner.get_my_tasks()
+    task_list = []
 
-        # Extract start time
-        start_time_match = re.search(r'from:(.+?) ', event)
-        start_time = start_time_match.group(1) if start_time_match else None
+    for task in tasks:
+        subject = task.title
+        due_date = task.due_date_time
+        # Combine task details and add to task_list
+        task_details = subject + ' am ' + due_date.strftime("%d.%m")
+        task_list.append(task_details)
 
-        # Extract end time
-        end_time_match = re.search(r'to: (.+?)\)', event)
-        end_time = end_time_match.group(1) if end_time_match else None
+    for task_details in task_list:
+        print(task_details)
 
-        # Add appropriate amount of spaces to subject to align events
-        space_amount = 20 - len(subject)
-        subject += space_amount * "&nbsp;"
-
-        # Combine event details and add to calendar_events string
-        event_details = subject + ' um ' + start_time + ' - ' + end_time
-        calendar_events += event_details + "\n"
-
-    print(calendar_events)
 else:
-    print('Authentication failed.')    
+    print('Authentication failed.')
