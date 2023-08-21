@@ -57,6 +57,10 @@
         font-weight: bold;
         color:orange;
         }
+        #weather-wind{
+        font-size: 20pt;
+        color:blue;
+        }
         #weather-tempminmax{
         font-size: 20pt;
         }
@@ -85,6 +89,9 @@
                 top: 150px;
                 left: 410px;
                 width: 380px;
+        }
+        #calendar-text {
+                font-size: 15pt;
         }
         #tasks {
                 position: absolute;
