@@ -4,8 +4,13 @@ curl https://get.pimoroni.com/inky | bash
 #enable i2c and spi
 sudo raspi-config
 
-#install Chromium browser
-sudo apt install chromium-browser
+
+#install selenium
+sudo apt-get install chromium-browser
+sudo apt-get install chromium-chromedriver
+sudo pip install selenium
+
+
 
 #Install de_CH.ISO-8859-1 Locale
 https://www.techcoil.com/blog/how-to-configure-locale-settings-of-raspbian-stretch-with-raspi-config/
