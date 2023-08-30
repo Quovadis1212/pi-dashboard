@@ -1,51 +1,55 @@
+#!/usr/bin/env python3
+
 #Required modules
 from bs4 import BeautifulSoup as bs
 import re
-import time
 import json
 import datetime
 import requests
 import locale
-from O365 import Account, MSGraphProtocol, FileSystemTokenBackend
+from O365 import Account, FileSystemTokenBackend
 from msal import ConfidentialClientApplication
 import feedparser
 import qrcode
-#import subprocess
 
-#import config.py with variables
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+import os
+
+from PIL import Image
+from inky.auto import auto
+
+#import config with variables
 import config
 
-#test calendar
-#import subprocess
-#script_path = '/home/pi/pi-dashboard/get_calendar.py'
-#output = subprocess.check_output(['python', script_path], universal_newlines=True)
-#CALENDAR_EVENTS = output
-#print(CALENDAR_EVENTS)
-
-#test tasks
-#script_path = '/home/pi/pi-dashboard/get_tasks.py'
-#output = subprocess.check_output(['python', script_path], universal_newlines=True)
-#TASKS = output
-#print(TASKS)
-
-#test news
-#script_path = '/home/pi/pi-dashboard/get_news.py'
-#output = subprocess.check_output(['python', script_path], universal_newlines=True)
-#NEWS = output
-#print(NEWS)
-
 #Required variables
+templatepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ressources/dashboard_template.html')
+htmlpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard.html')
+imgpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard.png')
+tokenfilename = 'o365_token.txt'
+tokenfilepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), tokenfilename)
+tokenpath = os.path.dirname(os.path.abspath(__file__))
+
 
 
 #Required Functions
+
+#function to check internet connection
+def check_internet():
+    url='http://www.google.com/'
+    timeout=5
+    try:
+        _ = requests.get(url, timeout=timeout)
+        return True
+    except requests.ConnectionError:
+        return False
 
 # Function to get the weather data from openweathermap.org
 def get_weather(City):
     base_url = "https://api.openweathermap.org/data/2.5/forecast?"
     api_call = base_url + "lang=de" + "&q=" + City + "&appid=" + config.api_key + "&units=metric"
     return requests.get(api_call).text
-
-
 
 # Function to Check if token is expired
 def is_token_expired(access_token):
@@ -58,7 +62,6 @@ def is_token_expired(access_token):
 
 # Function to Refresh the access token
 def refresh_access_token(client_id, client_secret, token_path, token_filename, access_token):
-    '''
     # Read the refresh token from the file if it exists
     try:
         with open(token_filename, 'r') as f:
@@ -67,7 +70,7 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename, a
     except FileNotFoundError:
         access_token = None
         print("No token found. Please run get_token.py first.")
-    '''
+
     match = re.search(r'"refresh_token": "([^"]+)"', access_token)
     if match:
         refresh_token = match.group(1)
@@ -85,49 +88,25 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename, a
     account.connection.token_backend.token = {'refresh_token': refresh_token}
 
     # Refresh the access token using MSAL
+    
     authority = 'https://login.microsoftonline.com/common'
     scopes = ['User.Read', 'Calendars.Read', 'Tasks.Read']
     app = ConfidentialClientApplication(client_id, authority=authority, client_credential=client_secret)
-
-    '''
-    result = app.acquire_token_by_refresh_token(account.connection.token_backend.token['refresh_token'], scopes=scopes)
-
-    # Check if the access token was successfully refreshed
-    if 'access_token' in result:
+    result = app.acquire_token_silent(scopes, account=account.connection)
+    if "access_token" in result:
         access_token = result['access_token']
-        expires_in = result['expires_in']
-
-        # Update the access token and its expiration time in the token backend
-        account.connection.token_backend.token['access_token'] = access_token
-        account.connection.token_backend.token['expires_in'] = expires_in
-
-        # Calculate the expiration timestamp (current time + expires_in)
-        expires_at = int(time.time()) + expires_in
-        account.connection.token_backend.token['expires_at'] = expires_at
-
-        # Save the updated token information
-        account.connection.token_backend.save_token()
-
-        # Return the refreshed access token and its expiration time
-        return access_token, expires_at
+        expires_at = result['expires_on']
+        return (access_token, expires_at)
     else:
-        # Failed to refresh access token
-        #print('Failed to refresh access token.')
+        print(result['error'])
+        print(result['error_description'])
         return None
-    '''
-
+        
 # Function to get the calendar events
 def get_calendar():
     calendar_events = ""
-
-    '''
-    #set scopes to read shared calendars and refresh token
-    #scopes = ['Calendars.Read.Shared', 'offline_access']
-    scopes = 'Calendars.Read.Shared offline_access'
-    '''
-
     # Read Microsoft 365 access token from file 
-    with open(config.token_pf, 'r') as f:
+    with open(tokenfilepath, 'r') as f:
         access_token = f.read().strip()
 
     if access_token == "":
@@ -136,7 +115,7 @@ def get_calendar():
 
     #if token is expired refresh it
     if is_token_expired(access_token):
-        refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, config.token_path, config.token_filename, access_token)
+        refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, tokenpath, tokenfilename, access_token)
         if refreshed_token:
             access_token, expires_at = refreshed_token
             print('Refreshed Access Token:', access_token)
@@ -144,7 +123,7 @@ def get_calendar():
 
     # Create Microsoft Graph API account object
     credentials = (config.CLIENT_ID, config.SECRET_ID)
-    account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=config.token_path, token_filename=config.token_filename))
+    account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=tokenpath, token_filename=tokenfilename))
 
     if not account.is_authenticated:
         account.authenticate(scopes=['basic', 'calendar_all'])
@@ -190,7 +169,7 @@ def get_calendar():
 # Function to get the tasks
 def get_tasks():
     # Read Microsoft 365 access token from file
-    with open(config.token_pf, 'r') as f:
+    with open(tokenfilepath, 'r') as f:
         access_token = f.read().strip()
 
     if access_token == "":
@@ -199,13 +178,15 @@ def get_tasks():
 
     # If token is expired, refresh it
     if is_token_expired(access_token):
-        refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, config.token_path, config.token_filename, access_token)
+        refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, tokenpath, tokenfilename, access_token)
         if refreshed_token:
             access_token, expires_at = refreshed_token
+            print('Refreshed Access Token:', access_token)
+            print('Expires At:', expires_at)
 
     # Create Microsoft Graph API account object
     credentials = (config.CLIENT_ID, config.SECRET_ID)
-    account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=config.token_path, token_filename=config.token_filename))
+    account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=tokenfilepath, token_filename=tokenfilename))
 
     if not account.is_authenticated:
         account.authenticate(scopes=['basic', 'tasks_all'])
@@ -249,10 +230,48 @@ def get_news():
     qr.make(fit=True)
 
     img = qr.make_image(fill_color="black", back_color="white")
-    qr_code_file = "newsqr.png"
+    qr_code_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ressources/newsqr.png')
     img.save(qr_code_file)
 
     return(news[0])
+
+# Function to replace data in html file
+def replace_data(replace_data_list, filedata):
+    for i in replace_data_list:
+        filedata = re.sub(i[0], i[1], filedata)
+    return filedata
+
+def capture_screenshot_from_file(file_path, image_path):
+    """Capture a screenshot of a webpage and save it as a PNG image"""
+    # Set parameters for Chrome driver
+    service = Service('/usr/bin/chromedriver')
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--window-size=800x480")
+
+    # Initialize Chrome driver
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+
+    # get absolute path of html file
+    url = 'file://' + os.path.abspath(file_path)
+
+    # Navigate to the URL
+    driver.get(url)
+
+    # Take a screenshot and save it
+    driver.save_screenshot(image_path)
+
+    # Close the browser
+    driver.quit()
+
+# Funcrion to write image to inky
+def image_to_inky(image_path):
+    inky = auto(ask_user=True, verbose=True)
+    saturation = 1
+    image = Image.open(image_path)
+    resizedimage = image.resize(inky.resolution)
+    inky.set_image(resizedimage, saturation=saturation)
+    inky.show()
 
 #set locale to german
 locale.setlocale(locale.LC_TIME, 'de_CH.ISO-8859-1')
@@ -260,10 +279,19 @@ locale.setlocale(locale.LC_TIME, 'de_CH.ISO-8859-1')
 #set headers for api call
 headers = {"accept": "application/json"}
 
+#check for internet connection and if not available, exit
+if not check_internet():
+    #replace content of dashboard.html with error message no_internet.png
+    with open(htmlpath, 'w') as file:
+        file.write("<img src=\"ressources/no_internet.png\" alt=\"No Internet Connection\" style=\"width:100%;height:100%;\">")
+    #print error message
+    print("No internet connection available. Exiting...")
+    exit()
+
 #api call to get O365 information
 CALENDAR_EVENTS = get_calendar()
-TASKS = get_tasks()
 print(CALENDAR_EVENTS)
+TASKS = get_tasks()
 print(TASKS)
 
 #api call to get news
@@ -286,34 +314,31 @@ json_data["list"][2]["wind"]["speed"] = round(json_data["list"][2]["wind"]["spee
 json_data_now = json_data["list"][0]
 json_data_forecast = json_data["list"][2]
 
+replace_data_list = [
+    ['WEEKDAY', datetime.datetime.now().strftime('%A')],
+    ['DAYTODAY', datetime.datetime.now().strftime("%d")],
+    ['MONTHTODAY', datetime.datetime.now().strftime("%b")],
+    ['NOW_NOWTEMP', str(json_data_now["main"]["temp"])],
+    ['NOW_DESC', json_data_now["weather"][0]["description"]],
+    ['NOW_WIND', str(json_data_now["wind"]["speed"])],
+    ['NOW_ICON', json_data_now["weather"][0]["icon"]],
+    ['FORECAST_NOWTEMP', str(json_data_forecast["main"]["temp"])],
+    ['FORECAST_DESC', json_data_forecast["weather"][0]["description"]],
+    ['FORECAST_WIND', str(json_data_forecast["wind"]["speed"])],
+    ['FORECAST_ICON', json_data_forecast["weather"][0]["icon"]],
+    ['NEWS', NEWS.replace('\n', "<br/>")],
+    ['CALENDAR_EVENTS', CALENDAR_EVENTS.replace('\n', "<br/>")],
+    ['TASKS', TASKS.replace('\n', "<br/>")],
+    ['TIMESTAMP', datetime.datetime.now().strftime('%H:%M')]
+]
+
 #replace text in html file and save it as dashboard.html
-with open('/home/pi/pi-dashboard/dashboard_template.html', 'r') as file :
+with open(templatepath, 'r') as file :
     filedata = file.read()
+    filedata = replace_data(replace_data_list, filedata)
 
-    filedata = filedata.replace('WEEKDAY', datetime.datetime.now().strftime('%A'))
-    filedata = filedata.replace('DAYTODAY', datetime.datetime.now().strftime("%d"))
-    filedata = filedata.replace('MONTHTODAY', datetime.datetime.now().strftime("%b"))
-
-    #filedata = filedata.replace('NOW_CITY', config.Location)
-    filedata = re.sub('NOW_NOWTEMP', str(json_data_now["main"]["temp"]), filedata)
-    #filedata = re.sub('NOW_MINTEMP', str(json_data_now["main"]["temp_min"]), filedata)
-    #filedata = re.sub('NOW_MAXTEMP', str(json_data_now["main"]["temp_max"]), filedata)
-    filedata = filedata.replace('NOW_DESC', json_data_now["weather"][0]["description"])
-    filedata = re.sub('NOW_WIND', str(json_data_now["wind"]["speed"]), filedata)
-    filedata = re.sub('NOW_ICON', json_data_now["weather"][0]["icon"], filedata)
-
-    #filedata = re.sub('FORECAST_CITY', config.Location, filedata)
-    filedata = re.sub('FORECAST_NOWTEMP', str(json_data_forecast["main"]["temp"]), filedata)
-    #filedata = re.sub('FORECAST_MINTEMP', str(json_data_forecast["main"]["temp_min"]), filedata)
-    #filedata = re.sub('FORECAST_MAXTEMP', str(json_data_forecast["main"]["temp_max"]), filedata)
-    filedata = filedata.replace('FORECAST_DESC', json_data_forecast["weather"][0]["description"])
-    filedata = re.sub('FORECAST_WIND', str(json_data_forecast["wind"]["speed"]), filedata)
-    filedata = re.sub('FORECAST_ICON', json_data_forecast["weather"][0]["icon"], filedata)
-    
-    filedata = re.sub('NEWS', NEWS.replace('\n', "<br/>"), filedata)
-    filedata = re.sub('CALENDAR_EVENTS', CALENDAR_EVENTS.replace('\n', "<br/>"), filedata)
-    filedata = re.sub('TASKS', TASKS.replace('\n', "<br/>"), filedata)
-
-with open('/home/pi/pi-dashboard/dashboard.html', 'w') as file:
+with open(htmlpath, 'w') as file:
     file.write(filedata)
-    
+
+capture_screenshot_from_file(htmlpath, imgpath)
+image_to_inky(imgpath)

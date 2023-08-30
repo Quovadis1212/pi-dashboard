@@ -1,4 +1,4 @@
-
+        body {background-color: white;}
         p {font: size 18px;}
         * {font-family: "Rubik", sans-serif;}
         #today-header {
@@ -101,4 +101,9 @@
         }
         #task-text {
                 font-size: 15pt;
+        }
+        #timestamp {
+                position: absolute;
+                bottom: 0px;
+                right: 10px;
         }

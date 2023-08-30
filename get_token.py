@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from O365 import Account, MSOffice365Protocol
 import config
 import msal
