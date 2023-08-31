@@ -279,7 +279,7 @@ def image_to_inky(image_path):
     inky.show()
 
 #set locale to german
-locale.setlocale(locale.LC_TIME, 'de_CH.ISO-8859-1')
+locale.setlocale(locale.LC_TIME, 'de_CH.utf8')
 
 #set headers for api call
 headers = {"accept": "application/json"}
