@@ -106,10 +106,11 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename, a
 def get_calendar():
     calendar_events = ""
     # Read Microsoft 365 access token from file 
-    with open(tokenfilepath, 'r') as f:
-        access_token = f.read().strip()
-
-    if access_token == "":
+    try:
+        with open(tokenfilename, 'r') as f:
+            access_token = f.read().strip()
+    except FileNotFoundError:
+        access_token = None
         print("No token found. Please run get_token.py first.")
         exit()
 
@@ -169,10 +170,11 @@ def get_calendar():
 # Function to get the tasks
 def get_tasks():
     # Read Microsoft 365 access token from file
-    with open(tokenfilepath, 'r') as f:
-        access_token = f.read().strip()
-
-    if access_token == "":
+    try:
+        with open(tokenfilename, 'r') as f:
+            access_token = f.read().strip()
+    except FileNotFoundError:
+        access_token = None
         print("No token found. Please run get_token.py first.")
         exit()
 

@@ -2,7 +2,6 @@
 
 from O365 import Account, MSOffice365Protocol
 import config
-import msal
 
 credentials = (config.CLIENT_ID, config.SECRET_ID)
 protocol = MSOffice365Protocol(default_resource='common')
