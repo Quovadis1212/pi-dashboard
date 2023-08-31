@@ -88,7 +88,6 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename, a
     account.connection.token_backend.token = {'refresh_token': refresh_token}
 
     # Refresh the access token using MSAL
-    
     authority = 'https://login.microsoftonline.com/common'
     scopes = ['User.Read', 'Calendars.Read', 'Tasks.Read']
     app = ConfidentialClientApplication(client_id, authority=authority, client_credential=client_secret)
@@ -198,15 +197,19 @@ def get_tasks():
         tasks = planner.get_my_tasks()
         task_list = ""
         for task in tasks:
-            subject = task.title
-            due_date = task.due_date_time
-            # Combine task details and add to task_list
-            task_details = subject 
-            # If due_date is not None, add it to task_details
-            if due_date:
-                task_details += ' bis ' + due_date.strftime("%d.%m")
-            task_list += task_details + "\n"
-            
+            #check if task is not completed, using the completed_date attribute
+            if not task.completed_date:
+                subject = task.title
+                due_date = task.due_date_time
+                # Combine task details and add to task_list
+                task_details = subject 
+                # If due_date is not None, add it to task_details
+                if due_date:
+                    task_details += ' bis ' + due_date.strftime("%d.%m")
+            else:
+                break                
+            # Add the task details to task_list
+            task_list += task_details + '\n'
         return(task_list)
     else:
         return('Authentication failed.')
