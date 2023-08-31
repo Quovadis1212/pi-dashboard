@@ -24,10 +24,10 @@ sudo apt-get install -y python3-numpy
 sudo apt-get install -y git
 
 # Install inky library and dependencies
-pip3 install -y inky[rpi]
+pip3 install inky[rpi]
 
 # Install library dependencies via pip3
-pip3 install -y bs4 datetime requests O365 msal feedparser qrcode Pillow
+pip3 install bs4 datetime requests O365 msal feedparser qrcode Pillow selenium
 
 # Install selenium dependencies
 sudo apt-get install -y chromium-browser chromium-chromedriver
