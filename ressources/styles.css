@@ -1,6 +1,7 @@
 body {background-color: white;}
 p {font: size 18px;}
 * {font-family: "Rubik", sans-serif;}
+
 #today-header {
 position: absolute;
 display: flex;
@@ -36,6 +37,7 @@ margin-top: 5px;
 #title {
 font-size: 25pt;
 font-weight: bold;
+line-height: 90%;
 }
 #weather_now {
 position: absolute;
@@ -103,6 +105,7 @@ top: 0;
         font-weight: normal;
         margin-top: 0px;
         margin-bottom: 0px;
+        line-height: 30%;
 }
 #tasks {
         font-size: 25pt;
@@ -117,6 +120,7 @@ top: 0;
         font-weight: normal;
         margin-top: 0px;
         margin-bottom: 0px;
+        line-height: 70%;
 }
 #timestamp {
         position: absolute;

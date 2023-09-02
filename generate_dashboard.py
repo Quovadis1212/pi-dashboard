@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # Erforderliche Module importieren
-from bs4 import BeautifulSoup as bs
 import re
 import json
 import datetime
@@ -27,6 +26,7 @@ import config
 templatepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ressources/dashboard_template.html')
 htmlpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard.html')
 imgpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dashboard.png')
+no_internetpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ressources/no_internet.png')
 tokenfilename = 'o365_token.txt'
 tokenfilepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), tokenfilename)
 tokenpath = os.path.dirname(os.path.abspath(__file__))
@@ -160,7 +160,8 @@ def get_calendar():
     except FileNotFoundError:
         access_token = None
         print("No token found. Please run get_token.py first.")
-        exit()
+        return("No token found. Please run get_token.py first.")
+        
 
     # Aktualisieren des Zugriffstokens, wenn er abgelaufen ist
     if is_token_expired(access_token):
@@ -171,8 +172,7 @@ def get_calendar():
             print('Refreshed Access Token:', access_token)
             print('Expires At:', expires_at)
         else:
-            print("Token refresh failed.")
-            exit()
+            return("Token refresh failed.")
 
     # Ein Account-Objekt für die Microsoft Graph API erstellen
     credentials = (config.CLIENT_ID, config.SECRET_ID)
@@ -199,14 +199,19 @@ def get_calendar():
             # Titel des Ereignisses extrahieren
             subject_match = re.search(r'Subject: (.+?) \(on:', event)
             subject = subject_match.group(1) if subject_match else None
-
-            # Startzeit des Ereignisses extrahieren
+            # Wenn der Titel zu lang ist, wird er abgeschnitten
+            if len(subject) > 20:
+                subject = subject[:20]
+            
+            # Startzeit des Ereignisses extrahieren und von HH:MM:SS auf HH:MM formatieren
             start_time_match = re.search(r'from:(.+?) ', event)
             start_time = start_time_match.group(1) if start_time_match else None
+            start_time = start_time[:-3]
 
-            # Endzeit des Ereignisses extrahieren
+            # Endzeit des Ereignisses extrahieren und von HH:MM:SS auf HH:MM formatieren
             end_time_match = re.search(r'to: (.+?)\)', event)
             end_time = end_time_match.group(1) if end_time_match else None
+            end_time = end_time[:-3]
 
             # Abstand zwischen Titel und Startzeit berechnen und mit Leerzeichen auffüllen
             space_amount = 20 - len(subject)
@@ -235,8 +240,7 @@ def get_tasks():
     # Wenn die Datei nicht gefunden wird, wird ein Fehler ausgegeben
     except FileNotFoundError:
         access_token = None
-        print("No token found. Please run get_token.py first.")
-        exit()
+        return("No token found. Please run get_token.py first.")
 
     # Aktualisieren des Zugriffstokens, wenn er abgelaufen ist
     if is_token_expired(access_token):
@@ -247,8 +251,7 @@ def get_tasks():
             print('Refreshed Access Token:', access_token)
             print('Expires At:', expires_at)
         else:
-            print("Token refresh failed.")
-            exit()
+            return("Token refresh failed.")
 
     # Ein Account-Objekt für die Microsoft Graph API erstellen
     credentials = (config.CLIENT_ID, config.SECRET_ID)
@@ -404,9 +407,8 @@ headers = {"accept": "application/json"}
 
 # Prüfen, ob eine Internetverbindung besteht
 if not check_internet():
-    # Wenn keine Internetverbindung besteht, wird ein Bild mit einer Fehlermeldung angezeigt
-    with open(htmlpath, 'w') as file:
-        file.write("<img src=\"ressources/no_internet.png\" alt=\"No Internet Connection\" style=\"width:100%;height:100%;\">")
+    # Wenn keine Internetverbindung besteht, wird no_internet.html angezeigt
+    image_to_inky(no_internetpath)
     # Error message anzeigen
     print("No internet connection available. Exiting...")
     exit()
