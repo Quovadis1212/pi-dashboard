@@ -1,5 +1,66 @@
 #!/usr/bin/env python3
 
+#!/usr/bin/env python3
+"""! @brief Example Python program with Doxygen style comments."""
+
+
+##
+# @mainpage Raspberry Pi Dashboard mit Inky Display
+#
+# @section description_main Description
+# Dieses Python-Programm erstellt ein Dashboard für den Raspberry Pi mit einem Inky Impression 7Zoll Display.
+# Es werden Wetterdaten, Kalenderereignisse, Aufgaben und Nachrichten angezeigt.
+# @section notes_main Notes
+# - Das Progrann wurde für den Raspberry Pi 4 mit einem Inky Impression 7Zoll Display entwickelt.
+# - Das Programm wurde im Rahmen einer Projektarbeit im Bildungsgang Infromatiker Systemtechnik HF der TEKO Schweizerische Fachschule erstellt.
+# 
+
+
+##
+# @file generate_dashboard.py
+#
+# @brief Ruft die Daten für das Dashboard ab und erstellt ein HTML-Dokument, das als Screenshot auf dem Inky Display angezeigt wird.
+#
+# @section description_doxygen_example Description
+# Ruft die Daten für das Dashboard ab und erstellt ein HTML-Dokument, das als Screenshot auf dem Inky Display angezeigt wird.
+#
+# @section libraries_main Libraries/Modules
+# - re
+#  - Anwendung: Reguläre Ausdrücke
+# - json
+#  - Anwendung: JSON
+# - datetime
+#  - Anwendung: Datum und Zeit
+# - requests
+#  - Anwendung: HTTP-Anfragen
+# - Account, FileSystemTokenBackend
+#  - Anwendung: O365 API für Microsoft Graph
+# - ConfidentialClientApplication
+#  - Anwendung: MSAL für Microsoft Graph
+# - feedparser
+#  - Anwendung: RSS-Feeds
+# - qrcode
+#  - Anwendung: QR-Codes
+# - webdriver, Service, Options
+#  - Anwendung: Selenium für Screenshots
+# - os
+#  - Anwendung: Pfade
+# - Image, auto
+#  - Anwendung: Inky Display
+# - locale
+#  - Anwendung: Datums- und Zeitformatierung
+#
+# @section notes_doxygen_example Notes
+# - Comments are Doxygen compatible.
+#
+# @section todo_doxygen_example TODO
+# - None.
+#
+# @section author_doxygen_example Author(s)
+# - Created by David Stöckli on 04.09.2023.
+# 
+#
+
 # Erforderliche Module importieren
 import re
 import json
@@ -30,7 +91,6 @@ no_internetpath = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ress
 tokenfilename = 'o365_token.txt'
 tokenfilepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), tokenfilename)
 tokenpath = os.path.dirname(os.path.abspath(__file__))
-
 
 
 # Erforderliche Funktionen
@@ -103,24 +163,12 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename, a
     """
     # Die Datei mit dem Refresh-Token öffnen
     try:
-        with open(tokenfilepath, 'r') as f:
-            access_token = f.read().strip()
-            print("Token found.")
-    # Wenn die Datei nicht gefunden wird, wird ein Fehler ausgegeben
+        with open(token_filename, 'r') as f:
+            refresh_token = f.read().strip()
+            print("Refresh token found.")
     except FileNotFoundError:
-        access_token = None
-        print("No token found. Please run get_token.py first.")
-        exit()
-    # Den Refresh-Token aus dem Zugriffstoken extrahieren
-    match = re.search(r'"refresh_token": "([^"]+)"', access_token)
-    # Wenn ein Refresh-Token gefunden wurde, wird er extrahiert, ansonsten wird ein Fehler ausgegeben
-    if match:
-        refresh_token = match.group(1)
-        refresh_token = str(refresh_token)
-    else:
-        refresh_token = None
-        print("No refresh token found in the access_token string.")
-    
+        print("No refresh token found. Please run get_token.py first.")
+        return None
 
     # Eine Instanz der Account-Klasse erstellen
     credentials = (client_id, client_secret)
@@ -134,11 +182,13 @@ def refresh_access_token(client_id, client_secret, token_path, token_filename, a
     scopes = ['User.Read', 'Calendars.Read', 'Tasks.Read']
     app = ConfidentialClientApplication(client_id, authority=authority, client_credential=client_secret)
     result = app.acquire_token_silent(scopes, account=account.connection)
+
     # Wenn der Zugriffstoken erfolgreich aktualisiert wurde, wird er zurückgegeben, ansonsten wird ein Fehler ausgegeben
     if "access_token" in result:
         access_token = result['access_token']
         expires_at = result['expires_on']
-        return (access_token, expires_at)
+        print("Access token refreshed.")
+        return access_token, expires_at
     else:
         print(result['error'])
         print(result['error_description'])

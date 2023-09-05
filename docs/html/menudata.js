@@ -23,4 +23,25 @@
  @licend  The above is the entire license notice for the JavaScript code in this file
 */
 var menudata={children:[
-{text:"Hauptseite",url:"index.html"}]}
+{text:"Hauptseite",url:"index.html"},
+{text:"Pakete",url:"namespaces.html",children:[
+{text:"Pakete",url:"namespaces.html"},
+{text:"Paketfunktionen",url:"namespacemembers.html",children:[
+{text:"Alle",url:"namespacemembers.html",children:[
+{text:"a",url:"namespacemembers.html#index_a"},
+{text:"c",url:"namespacemembers.html#index_c"},
+{text:"f",url:"namespacemembers.html#index_f"},
+{text:"g",url:"namespacemembers.html#index_g"},
+{text:"h",url:"namespacemembers.html#index_h"},
+{text:"i",url:"namespacemembers.html#index_i"},
+{text:"j",url:"namespacemembers.html#index_j"},
+{text:"l",url:"namespacemembers.html#index_l"},
+{text:"n",url:"namespacemembers.html#index_n"},
+{text:"p",url:"namespacemembers.html#index_p"},
+{text:"r",url:"namespacemembers.html#index_r"},
+{text:"s",url:"namespacemembers.html#index_s"},
+{text:"t",url:"namespacemembers.html#index_t"}]},
+{text:"Funktionen",url:"namespacemembers_func.html"},
+{text:"Variablen",url:"namespacemembers_vars.html"}]}]},
+{text:"Dateien",url:"files.html",children:[
+{text:"Auflistung der Dateien",url:"files.html"}]}]}
