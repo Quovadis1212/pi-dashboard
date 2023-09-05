@@ -20,11 +20,11 @@ var indexSectionNames =
 
 var indexSectionLabels =
 {
-  0: "Alle",
-  1: "Namensbereiche",
-  2: "Dateien",
-  3: "Funktionen",
-  4: "Variablen",
-  5: "Seiten"
+  0: "All",
+  1: "Namespaces",
+  2: "Files",
+  3: "Functions",
+  4: "Variables",
+  5: "Pages"
 };
 
