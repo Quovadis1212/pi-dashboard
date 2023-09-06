@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
 
-#!/usr/bin/env python3
-"""! @brief Example Python program with Doxygen style comments."""
-
-
 ##
 # @mainpage Raspberry Pi Dashboard mit Inky Display
 #
@@ -128,72 +124,6 @@ def get_weather(City):
     # API-Aufruf und Rückgabe der Wetterdaten als Text im JSON Format
     return requests.get(api_call).text
 
-def is_token_expired(access_token):
-    """
-    Überprüft, ob ein Zugriffstoken abgelaufen ist.
-
-    Args:
-        access_token (str): Das Zugriffstoken.
-
-    Returns:
-        bool: True, wenn das Token abgelaufen ist, sonst False.
-    """
-    # Den Ablaufzeitpunkt des Tokens auslesen
-    match = re.search(r'"expires_at":\s*(\d+\.\d+)', access_token)
-    expires_at = float(match.group(1)) if match else 0
-    # Den aktuellen Zeitpunkt auslesen und mit dem Ablaufzeitpunkt vergleichen
-    if expires_at < datetime.datetime.utcnow().timestamp():
-        return True
-    else:
-        return False
-
-def refresh_access_token(client_id, client_secret, token_path, token_filename, access_token):
-    """
-    Aktualisiert ein Zugriffstoken mithilfe eines Refresh-Tokens.
-
-    Args:
-        client_id (str): Die Client-ID für die Authentifizierung.
-        client_secret (str): Das Client-Geheimnis für die Authentifizierung.
-        token_path (str): Der Pfad zum Verzeichnis, in dem Tokens gespeichert werden.
-        token_filename (str): Der Dateiname für das Token.
-        access_token (str): Das aktuelle Zugriffstoken.
-
-    Returns:
-        tuple: Ein Tupel mit dem aktualisierten Zugriffstoken und dem Ablaufzeitpunkt.
-    """
-    # Die Datei mit dem Refresh-Token öffnen
-    try:
-        with open(token_filename, 'r') as f:
-            refresh_token = f.read().strip()
-            print("Refresh token found.")
-    except FileNotFoundError:
-        print("No refresh token found. Please run get_token.py first.")
-        return None
-
-    # Eine Instanz der Account-Klasse erstellen
-    credentials = (client_id, client_secret)
-    account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=token_path, token_filename=token_filename))
-
-    # Den Refresh-Token in die Account-Instanz schreiben
-    account.connection.token_backend.token = {'refresh_token': refresh_token}
-
-    # Den Zugriffstoken mit MSAL aktualisieren
-    authority = 'https://login.microsoftonline.com/common'
-    scopes = ['User.Read', 'Calendars.Read', 'Tasks.Read']
-    app = ConfidentialClientApplication(client_id, authority=authority, client_credential=client_secret)
-    result = app.acquire_token_silent(scopes, account=account.connection)
-
-    # Wenn der Zugriffstoken erfolgreich aktualisiert wurde, wird er zurückgegeben, ansonsten wird ein Fehler ausgegeben
-    if "access_token" in result:
-        access_token = result['access_token']
-        expires_at = result['expires_on']
-        print("Access token refreshed.")
-        return access_token, expires_at
-    else:
-        print(result['error'])
-        print(result['error_description'])
-        return None
-        
 def get_calendar():
     """
     Ruft Kalenderereignisse von Microsoft Graph API ab.
@@ -212,21 +142,15 @@ def get_calendar():
         print("No token found. Please run get_token.py first.")
         return("No token found. Please run get_token.py first.")
         
-
-    # Aktualisieren des Zugriffstokens, wenn er abgelaufen ist
-    if is_token_expired(access_token):
-        refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, tokenpath, tokenfilename, access_token)
-        # Wenn der Zugriffstoken erfolgreich aktualisiert wurde, wird er ausgegeben, ansonsten wird ein Fehler ausgegeben
-        if refreshed_token:
-            access_token, expires_at = refreshed_token
-            print('Refreshed Access Token:', access_token)
-            print('Expires At:', expires_at)
-        else:
-            return("Token refresh failed.")
-
     # Ein Account-Objekt für die Microsoft Graph API erstellen
     credentials = (config.CLIENT_ID, config.SECRET_ID)
-    account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=tokenpath, token_filename=tokenfilename))
+    try:
+        account = Account(credentials, token_backend=FileSystemTokenBackend(token_path=tokenpath, token_filename=tokenfilename))
+    except FileNotFoundError:
+        return("No token found. Please run get_token.py first.")
+    except:
+        return("Authentication failed.")
+ 
     # Wenn der Account nicht authentifiziert ist, wird er authentifiziert
     if not account.is_authenticated:
         account.authenticate(scopes=['basic', 'calendar_all'])
@@ -291,17 +215,6 @@ def get_tasks():
     except FileNotFoundError:
         access_token = None
         return("No token found. Please run get_token.py first.")
-
-    # Aktualisieren des Zugriffstokens, wenn er abgelaufen ist
-    if is_token_expired(access_token):
-        refreshed_token = refresh_access_token(config.CLIENT_ID, config.SECRET_ID, tokenpath, tokenfilename, access_token)
-        # Wenn der Zugriffstoken erfolgreich aktualisiert wurde, wird er ausgegeben, ansonsten wird ein Fehler ausgegeben
-        if refreshed_token:
-            access_token, expires_at = refreshed_token
-            print('Refreshed Access Token:', access_token)
-            print('Expires At:', expires_at)
-        else:
-            return("Token refresh failed.")
 
     # Ein Account-Objekt für die Microsoft Graph API erstellen
     credentials = (config.CLIENT_ID, config.SECRET_ID)
