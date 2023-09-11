@@ -64,7 +64,6 @@ import datetime
 import requests
 import locale
 from O365 import Account, FileSystemTokenBackend
-from msal import ConfidentialClientApplication
 import feedparser
 import qrcode
 

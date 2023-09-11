@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['news_27',['NEWS',['../namespacegenerate__dashboard.html#a3f2a0c09d3341e42ee3061a2e626b5a7',1,'generate_dashboard']]],
-  ['no_5finternetpath_28',['no_internetpath',['../namespacegenerate__dashboard.html#a33267dedb7029408a2108bc44f338096',1,'generate_dashboard']]]
+  ['news_26',['NEWS',['../namespacegenerate__dashboard.html#a3f2a0c09d3341e42ee3061a2e626b5a7',1,'generate_dashboard']]],
+  ['no_5finternetpath_27',['no_internetpath',['../namespacegenerate__dashboard.html#a33267dedb7029408a2108bc44f338096',1,'generate_dashboard']]]
 ];

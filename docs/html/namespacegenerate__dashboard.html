@@ -93,15 +93,9 @@ Functions</h2></td></tr>
 <tr class="memitem:adf0ea42fd48be09b46a73915a01cc22f"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegenerate__dashboard.html#adf0ea42fd48be09b46a73915a01cc22f">image_to_inky</a> (image_path)</td></tr>
 <tr class="memdesc:adf0ea42fd48be09b46a73915a01cc22f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lädt ein Bild, skaliert es und zeigt es auf einem Inky-Display an.  <a href="namespacegenerate__dashboard.html#adf0ea42fd48be09b46a73915a01cc22f">More...</a><br /></td></tr>
 <tr class="separator:adf0ea42fd48be09b46a73915a01cc22f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7f85e75db5cb8384445747eac94a56a"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegenerate__dashboard.html#aa7f85e75db5cb8384445747eac94a56a">is_token_expired</a> (access_token)</td></tr>
-<tr class="memdesc:aa7f85e75db5cb8384445747eac94a56a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Überprüft, ob ein Zugriffstoken abgelaufen ist.  <a href="namespacegenerate__dashboard.html#aa7f85e75db5cb8384445747eac94a56a">More...</a><br /></td></tr>
-<tr class="separator:aa7f85e75db5cb8384445747eac94a56a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4835860c0f37b6fb68d7015952877794"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegenerate__dashboard.html#a4835860c0f37b6fb68d7015952877794">read_rss_feed</a> (rss_url)</td></tr>
 <tr class="memdesc:a4835860c0f37b6fb68d7015952877794"><td class="mdescLeft">&#160;</td><td class="mdescRight">Liest RSS-Feeds von einer angegebenen URL.  <a href="namespacegenerate__dashboard.html#a4835860c0f37b6fb68d7015952877794">More...</a><br /></td></tr>
 <tr class="separator:a4835860c0f37b6fb68d7015952877794"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b61a14c44a467fccc238e594398559e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegenerate__dashboard.html#a1b61a14c44a467fccc238e594398559e">refresh_access_token</a> (client_id, client_secret, token_path, token_filename, access_token)</td></tr>
-<tr class="memdesc:a1b61a14c44a467fccc238e594398559e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Aktualisiert ein Zugriffstoken mithilfe eines Refresh-Tokens.  <a href="namespacegenerate__dashboard.html#a1b61a14c44a467fccc238e594398559e">More...</a><br /></td></tr>
-<tr class="separator:a1b61a14c44a467fccc238e594398559e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9acadeebf7f315b5a67295f607495ae1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegenerate__dashboard.html#a9acadeebf7f315b5a67295f607495ae1">replace_data</a> (<a class="el" href="namespacegenerate__dashboard.html#a7fdfab0a87aecddc8723ccdc66d45ffa">replace_data_list</a>, <a class="el" href="namespacegenerate__dashboard.html#abeda486eed16f2f1dd10cb64dcc11106">filedata</a>)</td></tr>
 <tr class="memdesc:a9acadeebf7f315b5a67295f607495ae1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ersetzt Daten in einer HTML-Datei anhand einer Liste von Ersetzungen.  <a href="namespacegenerate__dashboard.html#a9acadeebf7f315b5a67295f607495ae1">More...</a><br /></td></tr>
 <tr class="separator:a9acadeebf7f315b5a67295f607495ae1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -328,35 +322,6 @@ str Die zurückgegebenen Wetterdaten als Text im JSON Format. </dd></dl>
 
 </div>
 </div>
-<a id="aa7f85e75db5cb8384445747eac94a56a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7f85e75db5cb8384445747eac94a56a">&#9670;&nbsp;</a></span>is_token_expired()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def generate_dashboard.is_token_expired </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>access_token</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Überprüft, ob ein Zugriffstoken abgelaufen ist. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">access_token</td><td>Das Zugriffstoken.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd>
-<dd>
-bool True, wenn das Token abgelaufen ist, sonst False. </dd></dl>
-
-</div>
-</div>
 <a id="a4835860c0f37b6fb68d7015952877794"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4835860c0f37b6fb68d7015952877794">&#9670;&nbsp;</a></span>read_rss_feed()</h2>
 
@@ -383,67 +348,6 @@ bool True, wenn das Token abgelaufen ist, sonst False. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd></dd>
 <dd>
 list Eine Liste mit Titeln und Links der gelesenen RSS-Nachrichten. </dd></dl>
-
-</div>
-</div>
-<a id="a1b61a14c44a467fccc238e594398559e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b61a14c44a467fccc238e594398559e">&#9670;&nbsp;</a></span>refresh_access_token()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def generate_dashboard.refresh_access_token </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>client_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>client_secret</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>token_path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>token_filename</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>access_token</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Aktualisiert ein Zugriffstoken mithilfe eines Refresh-Tokens. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">client_id</td><td>Die Client-ID für die Authentifizierung. </td></tr>
-    <tr><td class="paramname">client_secret</td><td>Das Client-Geheimnis für die Authentifizierung. </td></tr>
-    <tr><td class="paramname">token_path</td><td>Der Pfad zum Verzeichnis, in dem Tokens gespeichert werden. </td></tr>
-    <tr><td class="paramname">token_filename</td><td>Der Dateiname für das Token. </td></tr>
-    <tr><td class="paramname">access_token</td><td>Das aktuelle Zugriffstoken.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd>
-<dd>
-tuple Ein Tupel mit dem aktualisierten Zugriffstoken und dem Ablaufzeitpunkt. </dd></dl>
 
 </div>
 </div>

@@ -1,0 +1,138 @@
+\hypertarget{generate__dashboard_8py}{}\doxysection{generate\+\_\+dashboard.\+py File Reference}
+\label{generate__dashboard_8py}\index{generate\_dashboard.py@{generate\_dashboard.py}}
+
+
+Ruft die Daten für das Dashboard ab und erstellt ein HTML-\/\+Dokument, das als Screenshot auf dem Inky Display angezeigt wird.  
+
+
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespacegenerate__dashboard}{generate\+\_\+dashboard}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_aae32b7af3cf4a37a4e3cf18c06b1868b}{capture\+\_\+screenshot\+\_\+from\+\_\+file}} (file\+\_\+path, image\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Erstellt einen Screenshot einer Webseite aus einer HTML-\/\+Datei und speichert ihn als PNG-\/\+Bild. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a220e41f6f7f9698e102e813f43304414}{check\+\_\+internet}} ()
+\begin{DoxyCompactList}\small\item\em Prüft die Internetverbindung durch einen HTTP-\/\+Anfrageversuch an google.\+com. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a812bb0948475b77e2a84e0b5f9b6655a}{get\+\_\+calendar}} ()
+\begin{DoxyCompactList}\small\item\em Ruft Kalenderereignisse von Microsoft Graph API ab. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a9e8f840088c0c7b480a5e7548b684d8c}{get\+\_\+news}} ()
+\begin{DoxyCompactList}\small\item\em Liest RSS-\/\+Feeds von einer angegebenen URL. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_ad47acd58e2555a8322a2b37d19f2f701}{get\+\_\+tasks}} ()
+\begin{DoxyCompactList}\small\item\em Ruft Aufgaben von Microsoft Graph API ab. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a7b9e1ca45f990c1a7b6274564d3481be}{get\+\_\+weather}} (City)
+\begin{DoxyCompactList}\small\item\em Ruft Wetterdaten von Open\+Weather\+Map API ab. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_adf0ea42fd48be09b46a73915a01cc22f}{image\+\_\+to\+\_\+inky}} (image\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Lädt ein Bild, skaliert es und zeigt es auf einem Inky-\/\+Display an. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a4835860c0f37b6fb68d7015952877794}{read\+\_\+rss\+\_\+feed}} (rss\+\_\+url)
+\begin{DoxyCompactList}\small\item\em Liest RSS-\/\+Feeds von einer angegebenen URL. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a9acadeebf7f315b5a67295f607495ae1}{replace\+\_\+data}} (replace\+\_\+data\+\_\+list, filedata)
+\begin{DoxyCompactList}\small\item\em Ersetzt Daten in einer HTML-\/\+Datei anhand einer Liste von Ersetzungen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a31b42261c28814e1633c86d576d0731a}{CALENDAR\+\_\+\+EVENTS}} = get\+\_\+calendar()
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_abeda486eed16f2f1dd10cb64dcc11106}{filedata}} = file.\+read()
+\item 
+dictionary \mbox{\hyperlink{namespacegenerate__dashboard_af6b6ac953f8f4b50f71fb020972f410b}{headers}} = \{\char`\"{}accept\char`\"{}\+: \char`\"{}application/json\char`\"{}\}
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_acd8b58fce962ce02634ba3bbf5ad2bbb}{htmlpath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}dashboard.\+html\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_a169d8ade28c7389e93137b7670d931d6}{imgpath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}dashboard.\+png\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}{json\+\_\+data}} = json.\+loads(get\+\_\+weather(\mbox{\hyperlink{namespaceconfig_a7f0bccb448b8a3494913db7e9826f0a7}{config.\+Location}}))
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_aec7fde8a9756a9d503692b00ff48bdaf}{json\+\_\+data\+\_\+forecast}} = json\+\_\+data\mbox{[}\char`\"{}list\char`\"{}\mbox{]}\mbox{[}2\mbox{]}
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_a3e721caa2f735f903b8ebad9d3350278}{json\+\_\+data\+\_\+now}} = json\+\_\+data\mbox{[}\char`\"{}list\char`\"{}\mbox{]}\mbox{[}0\mbox{]}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a3f2a0c09d3341e42ee3061a2e626b5a7}{NEWS}} = get\+\_\+news()
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_a33267dedb7029408a2108bc44f338096}{no\+\_\+internetpath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}ressources/no\+\_\+internet.\+png\textquotesingle{})
+\item 
+list \mbox{\hyperlink{namespacegenerate__dashboard_a7fdfab0a87aecddc8723ccdc66d45ffa}{replace\+\_\+data\+\_\+list}}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a281c09b91cbdc7b405051356cfca91e3}{TASKS}} = get\+\_\+tasks()
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_ac29d2bef457daf9a68592c75487c26fb}{templatepath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}ressources/dashboard\+\_\+template.\+html\textquotesingle{})
+\item 
+string \mbox{\hyperlink{namespacegenerate__dashboard_a5e7f4cd5d66817f94cbc7b9f6228251b}{tokenfilename}} = \textquotesingle{}o365\+\_\+token.\+txt\textquotesingle{}
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_aa1dbac8bf44d52715a5435b8fe550898}{tokenfilepath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), tokenfilename)
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_aed6e0561fbbe39e2b2317142b95e5beb}{tokenpath}} = os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Ruft die Daten für das Dashboard ab und erstellt ein HTML-\/\+Dokument, das als Screenshot auf dem Inky Display angezeigt wird. 
+
+\hypertarget{generate__dashboard_8py_description_doxygen_example}{}\doxysubsection{Description}\label{generate__dashboard_8py_description_doxygen_example}
+Ruft die Daten für das Dashboard ab und erstellt ein HTML-\/\+Dokument, das als Screenshot auf dem Inky Display angezeigt wird.\hypertarget{generate__dashboard_8py_libraries_main}{}\doxysubsection{Libraries/\+Modules}\label{generate__dashboard_8py_libraries_main}
+
+\begin{DoxyItemize}
+\item re
+\begin{DoxyItemize}
+\item Anwendung\+: Reguläre Ausdrücke
+\end{DoxyItemize}
+\item json
+\begin{DoxyItemize}
+\item Anwendung\+: JSON
+\end{DoxyItemize}
+\item datetime
+\begin{DoxyItemize}
+\item Anwendung\+: Datum und Zeit
+\end{DoxyItemize}
+\item requests
+\begin{DoxyItemize}
+\item Anwendung\+: HTTP-\/\+Anfragen
+\end{DoxyItemize}
+\item Account, File\+System\+Token\+Backend
+\begin{DoxyItemize}
+\item Anwendung\+: O365 API für Microsoft Graph
+\end{DoxyItemize}
+\item Confidential\+Client\+Application
+\begin{DoxyItemize}
+\item Anwendung\+: MSAL für Microsoft Graph
+\end{DoxyItemize}
+\item feedparser
+\begin{DoxyItemize}
+\item Anwendung\+: RSS-\/\+Feeds
+\end{DoxyItemize}
+\item qrcode
+\begin{DoxyItemize}
+\item Anwendung\+: QR-\/\+Codes
+\end{DoxyItemize}
+\item webdriver, Service, Options
+\begin{DoxyItemize}
+\item Anwendung\+: Selenium für Screenshots
+\end{DoxyItemize}
+\item os
+\begin{DoxyItemize}
+\item Anwendung\+: Pfade
+\end{DoxyItemize}
+\item Image, auto
+\begin{DoxyItemize}
+\item Anwendung\+: Inky Display
+\end{DoxyItemize}
+\item locale
+\begin{DoxyItemize}
+\item Anwendung\+: Datums-\/ und Zeitformatierung
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{generate__dashboard_8py_notes_doxygen_example}{}\doxysubsection{Notes}\label{generate__dashboard_8py_notes_doxygen_example}
+
+\begin{DoxyItemize}
+\item Comments are Doxygen compatible.
+\end{DoxyItemize}\hypertarget{generate__dashboard_8py_todo_doxygen_example}{}\doxysubsection{TODO}\label{generate__dashboard_8py_todo_doxygen_example}
+
+\begin{DoxyItemize}
+\item None.
+\end{DoxyItemize}\hypertarget{generate__dashboard_8py_author_doxygen_example}{}\doxysubsection{Author(s)}\label{generate__dashboard_8py_author_doxygen_example}
+
+\begin{DoxyItemize}
+\item Created by David Stöckli on 04.\+09.\+2023. 
+\end{DoxyItemize}

@@ -1,0 +1,340 @@
+\hypertarget{namespacegenerate__dashboard}{}\doxysection{generate\+\_\+dashboard Namespace Reference}
+\label{namespacegenerate__dashboard}\index{generate\_dashboard@{generate\_dashboard}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_aae32b7af3cf4a37a4e3cf18c06b1868b}{capture\+\_\+screenshot\+\_\+from\+\_\+file}} (file\+\_\+path, image\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Erstellt einen Screenshot einer Webseite aus einer HTML-\/\+Datei und speichert ihn als PNG-\/\+Bild. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a220e41f6f7f9698e102e813f43304414}{check\+\_\+internet}} ()
+\begin{DoxyCompactList}\small\item\em Prüft die Internetverbindung durch einen HTTP-\/\+Anfrageversuch an google.\+com. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a812bb0948475b77e2a84e0b5f9b6655a}{get\+\_\+calendar}} ()
+\begin{DoxyCompactList}\small\item\em Ruft Kalenderereignisse von Microsoft Graph API ab. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a9e8f840088c0c7b480a5e7548b684d8c}{get\+\_\+news}} ()
+\begin{DoxyCompactList}\small\item\em Liest RSS-\/\+Feeds von einer angegebenen URL. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_ad47acd58e2555a8322a2b37d19f2f701}{get\+\_\+tasks}} ()
+\begin{DoxyCompactList}\small\item\em Ruft Aufgaben von Microsoft Graph API ab. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a7b9e1ca45f990c1a7b6274564d3481be}{get\+\_\+weather}} (City)
+\begin{DoxyCompactList}\small\item\em Ruft Wetterdaten von Open\+Weather\+Map API ab. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_adf0ea42fd48be09b46a73915a01cc22f}{image\+\_\+to\+\_\+inky}} (image\+\_\+path)
+\begin{DoxyCompactList}\small\item\em Lädt ein Bild, skaliert es und zeigt es auf einem Inky-\/\+Display an. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a4835860c0f37b6fb68d7015952877794}{read\+\_\+rss\+\_\+feed}} (rss\+\_\+url)
+\begin{DoxyCompactList}\small\item\em Liest RSS-\/\+Feeds von einer angegebenen URL. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a9acadeebf7f315b5a67295f607495ae1}{replace\+\_\+data}} (\mbox{\hyperlink{namespacegenerate__dashboard_a7fdfab0a87aecddc8723ccdc66d45ffa}{replace\+\_\+data\+\_\+list}}, \mbox{\hyperlink{namespacegenerate__dashboard_abeda486eed16f2f1dd10cb64dcc11106}{filedata}})
+\begin{DoxyCompactList}\small\item\em Ersetzt Daten in einer HTML-\/\+Datei anhand einer Liste von Ersetzungen. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a31b42261c28814e1633c86d576d0731a}{CALENDAR\+\_\+\+EVENTS}} = \mbox{\hyperlink{namespacegenerate__dashboard_a812bb0948475b77e2a84e0b5f9b6655a}{get\+\_\+calendar}}()
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_abeda486eed16f2f1dd10cb64dcc11106}{filedata}} = file.\+read()
+\item 
+dictionary \mbox{\hyperlink{namespacegenerate__dashboard_af6b6ac953f8f4b50f71fb020972f410b}{headers}} = \{\char`\"{}accept\char`\"{}\+: \char`\"{}application/json\char`\"{}\}
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_acd8b58fce962ce02634ba3bbf5ad2bbb}{htmlpath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}dashboard.\+html\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_a169d8ade28c7389e93137b7670d931d6}{imgpath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}dashboard.\+png\textquotesingle{})
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}{json\+\_\+data}} = json.\+loads(\mbox{\hyperlink{namespacegenerate__dashboard_a7b9e1ca45f990c1a7b6274564d3481be}{get\+\_\+weather}}(\mbox{\hyperlink{namespaceconfig_a7f0bccb448b8a3494913db7e9826f0a7}{config.\+Location}}))
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_aec7fde8a9756a9d503692b00ff48bdaf}{json\+\_\+data\+\_\+forecast}} = \mbox{\hyperlink{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}{json\+\_\+data}}\mbox{[}\char`\"{}list\char`\"{}\mbox{]}\mbox{[}2\mbox{]}
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_a3e721caa2f735f903b8ebad9d3350278}{json\+\_\+data\+\_\+now}} = \mbox{\hyperlink{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}{json\+\_\+data}}\mbox{[}\char`\"{}list\char`\"{}\mbox{]}\mbox{[}0\mbox{]}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a3f2a0c09d3341e42ee3061a2e626b5a7}{NEWS}} = \mbox{\hyperlink{namespacegenerate__dashboard_a9e8f840088c0c7b480a5e7548b684d8c}{get\+\_\+news}}()
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_a33267dedb7029408a2108bc44f338096}{no\+\_\+internetpath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}ressources/no\+\_\+internet.\+png\textquotesingle{})
+\item 
+list \mbox{\hyperlink{namespacegenerate__dashboard_a7fdfab0a87aecddc8723ccdc66d45ffa}{replace\+\_\+data\+\_\+list}}
+\item 
+def \mbox{\hyperlink{namespacegenerate__dashboard_a281c09b91cbdc7b405051356cfca91e3}{TASKS}} = \mbox{\hyperlink{namespacegenerate__dashboard_ad47acd58e2555a8322a2b37d19f2f701}{get\+\_\+tasks}}()
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_ac29d2bef457daf9a68592c75487c26fb}{templatepath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}ressources/dashboard\+\_\+template.\+html\textquotesingle{})
+\item 
+string \mbox{\hyperlink{namespacegenerate__dashboard_a5e7f4cd5d66817f94cbc7b9f6228251b}{tokenfilename}} = \textquotesingle{}o365\+\_\+token.\+txt\textquotesingle{}
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_aa1dbac8bf44d52715a5435b8fe550898}{tokenfilepath}} = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \mbox{\hyperlink{namespacegenerate__dashboard_a5e7f4cd5d66817f94cbc7b9f6228251b}{tokenfilename}})
+\item 
+\mbox{\hyperlink{namespacegenerate__dashboard_aed6e0561fbbe39e2b2317142b95e5beb}{tokenpath}} = os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacegenerate__dashboard_aae32b7af3cf4a37a4e3cf18c06b1868b}\label{namespacegenerate__dashboard_aae32b7af3cf4a37a4e3cf18c06b1868b}} 
+\index{generate\_dashboard@{generate\_dashboard}!capture\_screenshot\_from\_file@{capture\_screenshot\_from\_file}}
+\index{capture\_screenshot\_from\_file@{capture\_screenshot\_from\_file}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{capture\_screenshot\_from\_file()}{capture\_screenshot\_from\_file()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+capture\+\_\+screenshot\+\_\+from\+\_\+file (\begin{DoxyParamCaption}\item[{}]{file\+\_\+path,  }\item[{}]{image\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Erstellt einen Screenshot einer Webseite aus einer HTML-\/\+Datei und speichert ihn als PNG-\/\+Bild. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+\_\+path} & Der Pfad zur HTML-\/\+Datei. \\
+\hline
+{\em image\+\_\+path} & Der Pfad, unter dem das Bild gespeichert werden soll. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a220e41f6f7f9698e102e813f43304414}\label{namespacegenerate__dashboard_a220e41f6f7f9698e102e813f43304414}} 
+\index{generate\_dashboard@{generate\_dashboard}!check\_internet@{check\_internet}}
+\index{check\_internet@{check\_internet}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{check\_internet()}{check\_internet()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+check\+\_\+internet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Prüft die Internetverbindung durch einen HTTP-\/\+Anfrageversuch an google.\+com. 
+
+\begin{DoxyReturn}{Returns}
+
+
+bool True, wenn die Verbindung erfolgreich ist, False sonst. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a812bb0948475b77e2a84e0b5f9b6655a}\label{namespacegenerate__dashboard_a812bb0948475b77e2a84e0b5f9b6655a}} 
+\index{generate\_dashboard@{generate\_dashboard}!get\_calendar@{get\_calendar}}
+\index{get\_calendar@{get\_calendar}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{get\_calendar()}{get\_calendar()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+get\+\_\+calendar (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Ruft Kalenderereignisse von Microsoft Graph API ab. 
+
+\begin{DoxyReturn}{Returns}
+
+
+str Eine formatierte Zeichenfolge mit den abgerufenen Kalenderereignissen. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a9e8f840088c0c7b480a5e7548b684d8c}\label{namespacegenerate__dashboard_a9e8f840088c0c7b480a5e7548b684d8c}} 
+\index{generate\_dashboard@{generate\_dashboard}!get\_news@{get\_news}}
+\index{get\_news@{get\_news}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{get\_news()}{get\_news()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+get\+\_\+news (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Liest RSS-\/\+Feeds von einer angegebenen URL. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rss\+\_\+url} & Die URL des RSS-\/\+Feeds.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+
+list Eine Liste mit Titeln und Links der gelesenen RSS-\/\+Nachrichten. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacegenerate__dashboard_ad47acd58e2555a8322a2b37d19f2f701}\label{namespacegenerate__dashboard_ad47acd58e2555a8322a2b37d19f2f701}} 
+\index{generate\_dashboard@{generate\_dashboard}!get\_tasks@{get\_tasks}}
+\index{get\_tasks@{get\_tasks}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{get\_tasks()}{get\_tasks()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+get\+\_\+tasks (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Ruft Aufgaben von Microsoft Graph API ab. 
+
+\begin{DoxyReturn}{Returns}
+
+
+str Eine formatierte Zeichenfolge mit den abgerufenen Aufgaben. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a7b9e1ca45f990c1a7b6274564d3481be}\label{namespacegenerate__dashboard_a7b9e1ca45f990c1a7b6274564d3481be}} 
+\index{generate\_dashboard@{generate\_dashboard}!get\_weather@{get\_weather}}
+\index{get\_weather@{get\_weather}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{get\_weather()}{get\_weather()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+get\+\_\+weather (\begin{DoxyParamCaption}\item[{}]{City }\end{DoxyParamCaption})}
+
+
+
+Ruft Wetterdaten von Open\+Weather\+Map API ab. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em City} & Der Name der Stadt, für die die Wetterdaten abgerufen werden sollen.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+
+str Die zurückgegebenen Wetterdaten als Text im JSON Format. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacegenerate__dashboard_adf0ea42fd48be09b46a73915a01cc22f}\label{namespacegenerate__dashboard_adf0ea42fd48be09b46a73915a01cc22f}} 
+\index{generate\_dashboard@{generate\_dashboard}!image\_to\_inky@{image\_to\_inky}}
+\index{image\_to\_inky@{image\_to\_inky}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{image\_to\_inky()}{image\_to\_inky()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+image\+\_\+to\+\_\+inky (\begin{DoxyParamCaption}\item[{}]{image\+\_\+path }\end{DoxyParamCaption})}
+
+
+
+Lädt ein Bild, skaliert es und zeigt es auf einem Inky-\/\+Display an. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em image\+\_\+path} & Der Pfad zum Bild. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a4835860c0f37b6fb68d7015952877794}\label{namespacegenerate__dashboard_a4835860c0f37b6fb68d7015952877794}} 
+\index{generate\_dashboard@{generate\_dashboard}!read\_rss\_feed@{read\_rss\_feed}}
+\index{read\_rss\_feed@{read\_rss\_feed}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{read\_rss\_feed()}{read\_rss\_feed()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+read\+\_\+rss\+\_\+feed (\begin{DoxyParamCaption}\item[{}]{rss\+\_\+url }\end{DoxyParamCaption})}
+
+
+
+Liest RSS-\/\+Feeds von einer angegebenen URL. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rss\+\_\+url} & Die URL des RSS-\/\+Feeds.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+
+list Eine Liste mit Titeln und Links der gelesenen RSS-\/\+Nachrichten. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a9acadeebf7f315b5a67295f607495ae1}\label{namespacegenerate__dashboard_a9acadeebf7f315b5a67295f607495ae1}} 
+\index{generate\_dashboard@{generate\_dashboard}!replace\_data@{replace\_data}}
+\index{replace\_data@{replace\_data}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{replace\_data()}{replace\_data()}}
+{\footnotesize\ttfamily def generate\+\_\+dashboard.\+replace\+\_\+data (\begin{DoxyParamCaption}\item[{}]{replace\+\_\+data\+\_\+list,  }\item[{}]{filedata }\end{DoxyParamCaption})}
+
+
+
+Ersetzt Daten in einer HTML-\/\+Datei anhand einer Liste von Ersetzungen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em replace\+\_\+data\+\_\+list} & Eine Liste von Ersetzungen als Tupel. \\
+\hline
+{\em filedata} & Der Inhalt der HTML-\/\+Datei.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+
+str Der aktualisierte Inhalt der HTML-\/\+Datei. 
+\end{DoxyReturn}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a31b42261c28814e1633c86d576d0731a}\label{namespacegenerate__dashboard_a31b42261c28814e1633c86d576d0731a}} 
+\index{generate\_dashboard@{generate\_dashboard}!CALENDAR\_EVENTS@{CALENDAR\_EVENTS}}
+\index{CALENDAR\_EVENTS@{CALENDAR\_EVENTS}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{CALENDAR\_EVENTS}{CALENDAR\_EVENTS}}
+{\footnotesize\ttfamily def CALENDAR\+\_\+\+EVENTS = \mbox{\hyperlink{namespacegenerate__dashboard_a812bb0948475b77e2a84e0b5f9b6655a}{get\+\_\+calendar}}()}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_abeda486eed16f2f1dd10cb64dcc11106}\label{namespacegenerate__dashboard_abeda486eed16f2f1dd10cb64dcc11106}} 
+\index{generate\_dashboard@{generate\_dashboard}!filedata@{filedata}}
+\index{filedata@{filedata}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{filedata}{filedata}}
+{\footnotesize\ttfamily def filedata = file.\+read()}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_af6b6ac953f8f4b50f71fb020972f410b}\label{namespacegenerate__dashboard_af6b6ac953f8f4b50f71fb020972f410b}} 
+\index{generate\_dashboard@{generate\_dashboard}!headers@{headers}}
+\index{headers@{headers}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{headers}{headers}}
+{\footnotesize\ttfamily dictionary headers = \{\char`\"{}accept\char`\"{}\+: \char`\"{}application/json\char`\"{}\}}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_acd8b58fce962ce02634ba3bbf5ad2bbb}\label{namespacegenerate__dashboard_acd8b58fce962ce02634ba3bbf5ad2bbb}} 
+\index{generate\_dashboard@{generate\_dashboard}!htmlpath@{htmlpath}}
+\index{htmlpath@{htmlpath}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{htmlpath}{htmlpath}}
+{\footnotesize\ttfamily htmlpath = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}dashboard.\+html\textquotesingle{})}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_a169d8ade28c7389e93137b7670d931d6}\label{namespacegenerate__dashboard_a169d8ade28c7389e93137b7670d931d6}} 
+\index{generate\_dashboard@{generate\_dashboard}!imgpath@{imgpath}}
+\index{imgpath@{imgpath}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{imgpath}{imgpath}}
+{\footnotesize\ttfamily imgpath = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}dashboard.\+png\textquotesingle{})}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}\label{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}} 
+\index{generate\_dashboard@{generate\_dashboard}!json\_data@{json\_data}}
+\index{json\_data@{json\_data}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{json\_data}{json\_data}}
+{\footnotesize\ttfamily json\+\_\+data = json.\+loads(\mbox{\hyperlink{namespacegenerate__dashboard_a7b9e1ca45f990c1a7b6274564d3481be}{get\+\_\+weather}}(\mbox{\hyperlink{namespaceconfig_a7f0bccb448b8a3494913db7e9826f0a7}{config.\+Location}}))}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_aec7fde8a9756a9d503692b00ff48bdaf}\label{namespacegenerate__dashboard_aec7fde8a9756a9d503692b00ff48bdaf}} 
+\index{generate\_dashboard@{generate\_dashboard}!json\_data\_forecast@{json\_data\_forecast}}
+\index{json\_data\_forecast@{json\_data\_forecast}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{json\_data\_forecast}{json\_data\_forecast}}
+{\footnotesize\ttfamily json\+\_\+data\+\_\+forecast = \mbox{\hyperlink{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}{json\+\_\+data}}\mbox{[}\char`\"{}list\char`\"{}\mbox{]}\mbox{[}2\mbox{]}}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_a3e721caa2f735f903b8ebad9d3350278}\label{namespacegenerate__dashboard_a3e721caa2f735f903b8ebad9d3350278}} 
+\index{generate\_dashboard@{generate\_dashboard}!json\_data\_now@{json\_data\_now}}
+\index{json\_data\_now@{json\_data\_now}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{json\_data\_now}{json\_data\_now}}
+{\footnotesize\ttfamily json\+\_\+data\+\_\+now = \mbox{\hyperlink{namespacegenerate__dashboard_acf4868c665e9712757be2e4829ffbf0a}{json\+\_\+data}}\mbox{[}\char`\"{}list\char`\"{}\mbox{]}\mbox{[}0\mbox{]}}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_a3f2a0c09d3341e42ee3061a2e626b5a7}\label{namespacegenerate__dashboard_a3f2a0c09d3341e42ee3061a2e626b5a7}} 
+\index{generate\_dashboard@{generate\_dashboard}!NEWS@{NEWS}}
+\index{NEWS@{NEWS}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{NEWS}{NEWS}}
+{\footnotesize\ttfamily def NEWS = \mbox{\hyperlink{namespacegenerate__dashboard_a9e8f840088c0c7b480a5e7548b684d8c}{get\+\_\+news}}()}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_a33267dedb7029408a2108bc44f338096}\label{namespacegenerate__dashboard_a33267dedb7029408a2108bc44f338096}} 
+\index{generate\_dashboard@{generate\_dashboard}!no\_internetpath@{no\_internetpath}}
+\index{no\_internetpath@{no\_internetpath}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{no\_internetpath}{no\_internetpath}}
+{\footnotesize\ttfamily no\+\_\+internetpath = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}ressources/no\+\_\+internet.\+png\textquotesingle{})}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_a7fdfab0a87aecddc8723ccdc66d45ffa}\label{namespacegenerate__dashboard_a7fdfab0a87aecddc8723ccdc66d45ffa}} 
+\index{generate\_dashboard@{generate\_dashboard}!replace\_data\_list@{replace\_data\_list}}
+\index{replace\_data\_list@{replace\_data\_list}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{replace\_data\_list}{replace\_data\_list}}
+{\footnotesize\ttfamily list replace\+\_\+data\+\_\+list}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  [}
+\DoxyCodeLine{2     [\textcolor{stringliteral}{'WEEKDAY'}, datetime.datetime.now().strftime(\textcolor{stringliteral}{'\%A'})],}
+\DoxyCodeLine{3     [\textcolor{stringliteral}{'DAYTODAY'}, datetime.datetime.now().strftime(\textcolor{stringliteral}{"{}\%d"{}})],}
+\DoxyCodeLine{4     [\textcolor{stringliteral}{'MONTHTODAY'}, datetime.datetime.now().strftime(\textcolor{stringliteral}{"{}\%b"{}})],}
+\DoxyCodeLine{5     [\textcolor{stringliteral}{'NOW\_NOWTEMP'}, str(json\_data\_now[\textcolor{stringliteral}{"{}main"{}}][\textcolor{stringliteral}{"{}temp"{}}])],}
+\DoxyCodeLine{6     [\textcolor{stringliteral}{'NOW\_DESC'}, json\_data\_now[\textcolor{stringliteral}{"{}weather"{}}][0][\textcolor{stringliteral}{"{}description"{}}]],}
+\DoxyCodeLine{7     [\textcolor{stringliteral}{'NOW\_WIND'}, str(json\_data\_now[\textcolor{stringliteral}{"{}wind"{}}][\textcolor{stringliteral}{"{}speed"{}}])],}
+\DoxyCodeLine{8     [\textcolor{stringliteral}{'NOW\_ICON'}, json\_data\_now[\textcolor{stringliteral}{"{}weather"{}}][0][\textcolor{stringliteral}{"{}icon"{}}]],}
+\DoxyCodeLine{9     [\textcolor{stringliteral}{'FORECAST\_NOWTEMP'}, str(json\_data\_forecast[\textcolor{stringliteral}{"{}main"{}}][\textcolor{stringliteral}{"{}temp"{}}])],}
+\DoxyCodeLine{10     [\textcolor{stringliteral}{'FORECAST\_DESC'}, json\_data\_forecast[\textcolor{stringliteral}{"{}weather"{}}][0][\textcolor{stringliteral}{"{}description"{}}]],}
+\DoxyCodeLine{11     [\textcolor{stringliteral}{'FORECAST\_WIND'}, str(json\_data\_forecast[\textcolor{stringliteral}{"{}wind"{}}][\textcolor{stringliteral}{"{}speed"{}}])],}
+\DoxyCodeLine{12     [\textcolor{stringliteral}{'FORECAST\_ICON'}, json\_data\_forecast[\textcolor{stringliteral}{"{}weather"{}}][0][\textcolor{stringliteral}{"{}icon"{}}]],}
+\DoxyCodeLine{13     [\textcolor{stringliteral}{'NEWS'}, NEWS.replace(\textcolor{stringliteral}{'\(\backslash\)n'}, \textcolor{stringliteral}{"{}<br/>"{}})],}
+\DoxyCodeLine{14     [\textcolor{stringliteral}{'CALENDAR\_EVENTS'}, CALENDAR\_EVENTS.replace(\textcolor{stringliteral}{'\(\backslash\)n'}, \textcolor{stringliteral}{"{}<br/>"{}})],}
+\DoxyCodeLine{15     [\textcolor{stringliteral}{'TASKS'}, TASKS.replace(\textcolor{stringliteral}{'\(\backslash\)n'}, \textcolor{stringliteral}{"{}<br/>"{}})],}
+\DoxyCodeLine{16     [\textcolor{stringliteral}{'TIMESTAMP'}, datetime.datetime.now().strftime(\textcolor{stringliteral}{'\%H:\%M'})]}
+\DoxyCodeLine{17 ]}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacegenerate__dashboard_a281c09b91cbdc7b405051356cfca91e3}\label{namespacegenerate__dashboard_a281c09b91cbdc7b405051356cfca91e3}} 
+\index{generate\_dashboard@{generate\_dashboard}!TASKS@{TASKS}}
+\index{TASKS@{TASKS}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{TASKS}{TASKS}}
+{\footnotesize\ttfamily def TASKS = \mbox{\hyperlink{namespacegenerate__dashboard_ad47acd58e2555a8322a2b37d19f2f701}{get\+\_\+tasks}}()}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_ac29d2bef457daf9a68592c75487c26fb}\label{namespacegenerate__dashboard_ac29d2bef457daf9a68592c75487c26fb}} 
+\index{generate\_dashboard@{generate\_dashboard}!templatepath@{templatepath}}
+\index{templatepath@{templatepath}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{templatepath}{templatepath}}
+{\footnotesize\ttfamily templatepath = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \textquotesingle{}ressources/dashboard\+\_\+template.\+html\textquotesingle{})}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_a5e7f4cd5d66817f94cbc7b9f6228251b}\label{namespacegenerate__dashboard_a5e7f4cd5d66817f94cbc7b9f6228251b}} 
+\index{generate\_dashboard@{generate\_dashboard}!tokenfilename@{tokenfilename}}
+\index{tokenfilename@{tokenfilename}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{tokenfilename}{tokenfilename}}
+{\footnotesize\ttfamily string tokenfilename = \textquotesingle{}o365\+\_\+token.\+txt\textquotesingle{}}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_aa1dbac8bf44d52715a5435b8fe550898}\label{namespacegenerate__dashboard_aa1dbac8bf44d52715a5435b8fe550898}} 
+\index{generate\_dashboard@{generate\_dashboard}!tokenfilepath@{tokenfilepath}}
+\index{tokenfilepath@{tokenfilepath}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{tokenfilepath}{tokenfilepath}}
+{\footnotesize\ttfamily tokenfilepath = os.\+path.\+join(os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+)), \mbox{\hyperlink{namespacegenerate__dashboard_a5e7f4cd5d66817f94cbc7b9f6228251b}{tokenfilename}})}
+
+\mbox{\Hypertarget{namespacegenerate__dashboard_aed6e0561fbbe39e2b2317142b95e5beb}\label{namespacegenerate__dashboard_aed6e0561fbbe39e2b2317142b95e5beb}} 
+\index{generate\_dashboard@{generate\_dashboard}!tokenpath@{tokenpath}}
+\index{tokenpath@{tokenpath}!generate\_dashboard@{generate\_dashboard}}
+\doxysubsubsection{\texorpdfstring{tokenpath}{tokenpath}}
+{\footnotesize\ttfamily tokenpath = os.\+path.\+dirname(os.\+path.\+abspath(\+\_\+\+\_\+file\+\_\+\+\_\+))}
+
